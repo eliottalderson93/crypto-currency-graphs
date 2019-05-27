@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Crypto-Currency Graphs</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.css" rel="stylesheet" type="text/css">
+    <style>
+        .dropdown {
+            width: 100px;
+            box-shadow: 0 0 8px #777;
+            left: 0;
+            position: absolute;
+            top: 100%;
+            z-index: 1000;
+        }
+        .ui-menu-item{
+            box-sizing: border-box !important;/* CSS 3 rec */
+            -moz-box-sizing: border-box; /* Firefox 2 */
+            -ms-box-sizing: border-box; /* Internet Explorer 8 */
+            -webkit-box-sizing: border-box; /* Safari 3 */
+            -khtml-box-sizing: border-box; /* Konqueror */
+            width:75px !important;
+            display:block !important;
+        }
+        .ui-menu-item div.ui-state-focus {
+            background: hsl(141, 71%, 48%);
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+    <!-- the bb class makes any element into a block see https://stackoverflow.com/questions/1030793/input-with-displayblock-is-not-a-block-why-not?rq=1-->
+</head>
+
+<body>
+    <section class="hero is-black">
+        <div class="container">
+            <div class="hero-header">
+                <p class="title">Displaying and translating API data into statistical graphs with Python libraries</p>
+                <p class="subtitle">dependencies include: Django, Pandas, Bokeh, and Requests</p>
+            </div>
+            <div class="hero-body">
+                <p class="title is-6">A custom-built RESTful Bokeh API in Python and Node.js</p>
+                <p>The request is sent via HTTP to my Python server, which modifies and sends it on to my Node.js proxy server</p>
+                <p>The proxy server sends and receives a JSON request externally, which it sends back to my Python server.</p>
+                <p>My Python server processes the received data first into the data I want and then into a Bokeh HTML component, which is displayed on the page.</p>
+            </div>
+        </div>
+    </section>
+    {% block content %}
+    <section class="section" style="background-color:hsl(141, 71%, 48%);min-height:100vh;">
+        <div class="container">
+            <p class="title is-5" style="color:white">Time Series:</p>
+            <div class="level">
+                <button class="button is-black" id="USDT">Tether</button>
+                <button class="button is-black" id="BTC">Bitcoin</button>
+                <button class="button is-black" id="tvb2">Bitcoin Jan2017-Jan2018</button>
+            </div>
+            <form class="level" id="customTime">
+                <div class="tile">
+                    <div class="ui-front menu">
+                        <label for="coinName" style="color:white">Cryptocurrency: </label>
+                        <input name="coinName" id="coinName">
+                    </div>
+                    <p id="coinError" class="error"></p>
+                </div>
+                <div class="tile">
+                    <label for="beginTime" style="color:white">Start of Time-Series: </label>
+                    <input name="beginTime" type="date" id="beginTime">
+                    <p id="beginError" class="error"></p>
+                </div>
+                <div class="tile">
+                    <label for="endTime" style="color:white">End of Time-Series: </label>
+                    <input name="endTime" type="date" id="endTime">
+                    <p id="endError" class="error"></p>
+                </div>
+                <button class="button is-black" type="submit">Make Graph</button>
+            </form>
+            <div class="level">
+                <div class="level-left" id="graphs">
+
+                </div>
+            </div>
+            <p class="title is-5" style="color:white">Comparing Coins:</p>
+            <div class="level">
+                <button class="button is-black" id="tvb">Tether vs Bitcoin</button>
+            </div>
+            <div class="level">
+                <div class="level-left" id="graphs2">
+
+                </div>
+            </div>
+
+        </div>
+        {% endblock %}
+    </section>
+</body>
+</html>
+{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.js"></script>
+<script src = '{% static "bokehGraphs/main.js" %}'>
+</script> {% endblock %}
+
